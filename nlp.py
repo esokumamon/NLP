@@ -14,6 +14,7 @@ from sklearn.naive_bayes import GaussianNB
 import math
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score
 import numpy as np
 
 stopwords=stopwords.words('english')
@@ -138,50 +139,38 @@ pred_labels = y_pred
 confusion_mat = confusion_matrix(true_labels, pred_labels)
 print('\nConfusion matrix:\n',confusion_mat)
 # Compute accuracy 
-accuracy = 100.0 * (df_testing_y == y_pred).sum() / df_testing_x.shape[0]
-print("\nAccuracy of the model:\n", round(accuracy, 2), "%")
+accuracy = accuracy_score(true_labels, pred_labels)
+print("\nAccuracy of the model:\n", accuracy)
 
 '''
 11. As a group come up with 6 new comments (4 comments should be non spam and 2 comment spam) and pass them to the classifier and check the results. You can be very creative and even do more happy.
 '''
-# Create comment as dataframe
-df_comments = pd.DataFrame(np.array([['I love you Shakira!!!!!!!',0],
-                            ['Good song <3',0],
-                            ['I am still listenning to it in 2023',0],
-                            ['Love it',0],
-                            ['Professor Merlin James is the best professor!',1],
-                            ['I love Introduction to AI!',1]]),
-                  columns=['CONTENT','CLASS'])
-new_X = df_comments["CONTENT"].to_list()
-new_Y = df_comments["CLASS"].to_list()
-print('\n6 new comments:\n',df_comments)
-# strip punctuations from strings
-for i in range(len(new_X)):
-    new_X[i] = new_X[i].translate(str.maketrans('','',"!\"#%&'()*+,-/:;<=>?@[\]^_`{|}~"))
-countVec = CountVectorizer(ngram_range=(1,1), stop_words=stopwords)
-trainTc = countVec.fit_transform(new_X)
-# Downscale the transformed data using tf-idf and again present highlights of the output (final features) such as the new shape of the data and any other useful information before proceeding.
-tfidf = TfidfTransformer()
-train_tfidf = tfidf.fit_transform(trainTc)
-print('\nAfter tfidf transform:\n',train_tfidf)
-tfidf_df=pd.DataFrame(train_tfidf.toarray(),columns=countVec.get_feature_names())
-tfidf_df['class'] = new_Y 
-print('\ntf-idf:\n',tfidf_df)
-# training set feature and class
-df_new_x, df_new_y = tfidf_df.iloc[:6,:-1], tfidf_df.iloc[:6,-1]
-# Train the model
-classifier.fit(df_new_x, df_new_y)
-# Predict the values for testing data
-new_y_pred = classifier.predict(df_new_x)   
+# Define comment as test data 
+input_data = [
+    'I love you Shakira!!!!!!!', 
+    'Good song <3',
+    'I am still listenning to it in 2023',
+    'Love it',
+    'Professor Merlin James is the best professor!',
+    'I love Introduction to AI!'
+]
+# Transform input data using count vectorizer
+input_tc = countVec.transform(input_data)
+type(input_tc)
+print('\ninput_tc:\n',input_tc)
+# Transform vectorized data using tfidf transformer
+input_tfidf = tfidf.transform(input_tc)
+type(input_tfidf)
+print('\ninput_tfidf:\n',input_tfidf)
+# Predict the output categories
+#input_tfidf = pd.DataFrame(data=input_tfidf)
+predictions = classifier.predict(input_tfidf.toarray()) 
 # Define sample labels 
-true_labels = df_new_y
-pred_labels = new_y_pred
-# Create confusion matrix 
-confusion_mat = confusion_matrix(true_labels, pred_labels)
-print('\nConfusion matrix:\n',confusion_mat)
-# Compute accuracy 
-accuracy = 100.0 * (df_new_y == new_y_pred).sum() / df_new_x.shape[0]
-print("\nAccuracy of the model:\n", round(accuracy, 2), "%")
+true_labels = input_data
+pred_labels = predictions
+# Print the outputs
+for input_data, prediction in zip(input_data, predictions):
+    print('\nComment : ', input_data, '\nPredicted Class: ', prediction)
 
 
 # %%
