@@ -128,8 +128,6 @@ print("\nMean results of model accuracy:\n",accuracy_values.mean())
 '''
 10. Test the model on the test data, print the confusion matrix and the accuracy of the model.
 '''
-# Train the model on the test data
-classifier.fit(df_testing_x, df_testing_y)
 # Predict the values for testing data
 y_pred = classifier.predict(df_testing_x)
 # Define sample labels 
@@ -151,8 +149,8 @@ input_data = [
     'Good song <3',
     'I am still listenning to it in 2023',
     'Love it',
-    'Professor Merlin James is the best professor!',
-    'I love Introduction to AI!'
+    'Please subcribe Youtube Chanel of Contennial College',
+    'My home has gone and I don''t have a job now. PLease click the fund raise link below and support me and my family!!!! Thanks!!!!!!'
 ]
 # Transform input data using count vectorizer
 input_tc = countVec.transform(input_data)
