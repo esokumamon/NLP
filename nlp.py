@@ -21,6 +21,8 @@ stopwords=stopwords.words('english')
 
 # load csv file into a data frame
 df=pd.read_csv("Youtube05-Shakira.csv")
+
+
 print()
 
 #display the shape of the dataframe
@@ -56,6 +58,7 @@ trainTc = countVec.fit_transform(X)
 
 print(trainTc.toarray())
 
+print("\nDimensions of training data:", trainTc.shape)
 print()
 
 
