@@ -70,10 +70,9 @@ print(train_tfidf)
 
 
 print('Place tfidf into dataframe')
-#tfidf_df=pd.DataFrame(train_tfidf.toarray(),columns=countVec.get_feature_names_out())
 tfidf_df=pd.DataFrame(train_tfidf.toarray(),columns=countVec.get_feature_names())
 print(tfidf_df.head(5))
-print(tfidf_df.shape)
+print("\nDimensions of tfidf data:",tfidf_df.shape)
 
 ### 6. Use pandas.sample to shuffle the dataset, set frac =1
 # append class column before shuffle
@@ -85,7 +84,7 @@ df_shuffle = tfidf_df.sample(frac=1,random_state=200)
 print('After shuffle')
 print(df_shuffle.head(5))
 # df_shuffle.to_excel('df_shuffle.xlsx')
-print(df_shuffle.shape)
+print("\nDimensions of shuffled data:",df_shuffle.shape)
 print()
 
 ### 7. Using pandas split your dataset into 75% for training and 25% for testing, make sure to separate the class from the feature(s)
@@ -95,7 +94,7 @@ print('Split Index: '+str(split_index))
 df_training_x, df_training_y = df_shuffle.iloc[:split_index,:-1], df_shuffle.iloc[:split_index,-1]
 print()
 print('Training Dataset')
-print(df_training_x.shape)
+print("\nDimensions of training data:",df_training_x.shape)
 print(df_training_y.shape)
 print(df_training_x.head(5))
 print(df_training_y.head(5))
@@ -104,7 +103,7 @@ print(df_training_y.head(5))
 df_testing_x, df_testing_y = df_shuffle.iloc[split_index:,:-1], df_shuffle.iloc[split_index:,-1]
 print()
 print('Testing Dataset')
-print(df_testing_x.shape)
+print("\nDimensions of testing data:",df_testing_x.shape)
 print(df_testing_y.shape)
 print(df_testing_x.head(5))
 print(df_testing_y.head(5))
