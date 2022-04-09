@@ -145,10 +145,10 @@ print("\nAccuracy of the model:\n", accuracy)
 input_data = [
     'I love you Shakira!!!!!!!', 
     'Good song <3',
-    'I am still listenning to it in 2023',
+    'I am still listening to it in 2023',
     'Love it',
-    'Please subcribe Youtube Chanel of Contennial College',
-    'My home has gone and I don''t have a job now. PLease click the fund raise link below and support me and my family!!!! Thanks!!!!!!'
+    'Please subscribe YouTube Chanel of Centennial College',
+    'My home has gone and I don''t have a job now. Please click the fund raise link below and support me and my family!!!! Thanks!!!!!!'
 ]
 # Transform input data using count vectorizer
 input_tc = countVec.transform(input_data)
@@ -158,8 +158,7 @@ print('\ninput_tc:\n',input_tc)
 input_tfidf = tfidf.transform(input_tc)
 type(input_tfidf)
 print('\ninput_tfidf:\n',input_tfidf)
-# Predict the output categories
-#input_tfidf = pd.DataFrame(data=input_tfidf)
+# Predict the values
 predictions = classifier.predict(input_tfidf.toarray()) 
 # Define sample labels 
 true_labels = input_data
